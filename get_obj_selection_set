@@ -1,0 +1,21 @@
+def get_obj(content, vimtype, name):
+    obj = None
+    container = content.viewManager.CreateContainerView(
+        content.rootFolder, vimtype, True)
+    for c in container.view:
+        if name:
+            if c.name == name:
+                obj = c
+                break
+        else:
+            obj = c
+            break
+	return obj
+	
+selection_set = []
+dvs_ss = vim.dvs.DistributedVirtualPortgroupSelection()
+dvs_ss.dvsUuid = dvs.uuid
+for pg in dvs.portgroup:
+	dvs_ss.portgroupKey.append(pg.key)
+selection_set.append(dvs_ss)
+bkp = content.dvSwitchManager.DVSManagerExportEntity_Task(selection_set)
