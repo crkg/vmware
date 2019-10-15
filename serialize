@@ -12,3 +12,6 @@ sbkp = content.dvSwitchManager.DVSManagerExportEntity_Task(selection_set)
 
 switch_restore = content.dvsSwitchManager.DVSManagerImportEntity_Task(switch_result, 'createEntityWithOriginal')
 
+datacenter_mo = get_obj(content, [vim.Datacenter], datacenter_name)
+
+dvs = get_obj(content, [vim.DistributedVirtualSwitch], vdswitch_name)
