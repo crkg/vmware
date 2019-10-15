@@ -1,0 +1,14 @@
+JSON serialize
+
+from pyVmomi.VmomiSupport import VmomiJSONEncoder
+
+jsonSerialized= json.dumps(pfVmomiObj, cls=VmomiJSONEncoder)
+
+pfVmomiObj = json.loads(jsonSerialized)
+
+------
+
+sbkp = content.dvSwitchManager.DVSManagerExportEntity_Task(selection_set)
+
+switch_restore = content.dvsSwitchManager.DVSManagerImportEntity_Task(switch_result, 'createEntityWithOriginal')
+
