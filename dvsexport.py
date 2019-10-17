@@ -35,3 +35,11 @@ for pg in dvs.portgroup:
 selection_set.append(dvs_ss)
 bkp = content.dvSwitchManager.DVSManagerExportEntity_Task(selection_set)
 
+
+from pyVmomi.VmomiSupport import VmomiJSONEncoder
+
+Use this to create your list:
+jsonSerialized= json.dumps(pfVmomiObj, cls=VmomiJSONEncoder)
+
+Then in the mapped function, use this to recover the object:
+pfVmomiObj = json.loads(jsonSerialized)
