@@ -1,0 +1,83 @@
+swagger: "2.0"
+info:
+  description: "VMware Classic API, Using this API you can get information and implement VMware classic changes."
+  version: '1.0.0'
+  title: "VMware Classic API"
+  contact:
+    name: "Ramesh KG"
+    email: "rameshkallikuppa.gopalakrishna@amadeus.com"
+host: "localhost"
+basePath: "/"
+schemes:
+- "https"
+- "http"
+paths:
+  /backupdvs:
+    post:
+      tags:
+      - "VMware backup dvs"
+      summary: "Backup switch and distributed port group from specific datacenter and distributed switch"
+      description: ""
+      operationId: "vmware.apis.vmwaredvsbackuprefactor.backupdvs"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "payload"
+        description: "Backup switch only (or) distributed switch"
+        required: true
+        schema:
+          $ref: "#/definitions/backupdvs"
+      responses:
+        201:
+          description: "Returns backedup status"
+          headers:
+            Location:
+              type: string
+              description: "The location URI of the vmwarebackup"
+        500:
+          description: "Internal server error"
+        400:
+          description: "Malformed syntax or a bad query."
+        401:
+          description: "Action requires user authentication."
+        404:
+          description: "Resource not found."
+        403:
+          description: "Unauthorized"
+        default:
+          description: "Error"
+definitions:
+  backupdvs:
+    type: "object"
+    properties:
+      switchName:
+        type: string
+        description: "Name of the Distributed virtual switch to backup"
+      vCenterHostName:
+        type: string
+        description: "vCenter hostname or IP"
+      vCenterUsername:
+        type: string
+        description: "vCenter Username"
+      vCenterPassword:
+        type: string
+        format: password
+        description: "vCenter Password"
+      switchOnly:
+        type: boolean
+        description: "To backup switch and portgroup set switchOnly to false , to backup switch alone set switchOnly to true"
+      datacenterName:
+        type: string
+        description: "vCenter Datacenter name"
+    required:
+      - switchName
+      - vCenterHostName
+      - vCenterUsername
+      - vCenterPassword
+      - switchOnly
+      - datacenterName
