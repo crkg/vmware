@@ -1,0 +1,36 @@
+from flask import Flask, jsonify, redirect
+from flask_cors import CORS
+import os
+import sys
+import connexion
+
+
+def load_conf(app):
+    app.config.from_object('config.app_conf_local')
+    if 'CONFILE_PATH' in os.environ:
+        app.config.from_envar('CONFILE_PATH')
+
+def create_app():
+    """app = Flask(__name__, static_folder='../swagger', static_url_path='',
+                template_folder='../swagger/dist')"""
+    connexion_app = connexion.App(__name__, specification_dir='swagger/')
+    app = connexion_app.app
+    load_conf(app)
+    database_init(app)
+    init_api(connexion_app)
+    # CORS(app)
+    return app
+
+
+def init_api(connexion_app):
+#    from vmware.apis_old import api
+#    api.init_app(app)
+    flask_app = connexion_app.app
+    @flask_app.route("/")
+    def documentation_root():
+        return redirect("/ui/")
+    connexion_app.add_api("swagger.yaml",validate_responses=True)
+
+app = create_app()
+print(app.config)
+print(app.url_map)
